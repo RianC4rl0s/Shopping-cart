@@ -132,7 +132,7 @@ public class DataBase extends SQLiteOpenHelper {
         values.put(COLUMN_PRODUCT_NAME,p.getName());
         values.put(COLUMN_PRODUCT_PRICE,p.getPrice());
         values.put(COLUMN_PRODUCT_QTD,p.getQdt());
-        values.put(COLUMN_PRODUCT_MARCA,p.getQdt());
+        values.put(COLUMN_PRODUCT_MARCA,p.getMarca());
 
         db.update(TABLE_PRODUCT,values,COLUMN_PRODUCT_ID + "  = ? ",
                 new String[] {String.valueOf(p.getCode())});
