@@ -77,15 +77,15 @@ public class MainActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clearFields();
+
                 String code = editCode.getText().toString();
                 String name = editName.getText().toString();
                 String phone = editPhone.getText().toString();
                 String email = editEmail.getText().toString();
 
-//                if(name.isEmpty()){
-//                    editName.setError("Obrigatório");
-//                }else{
+                if(name.isEmpty()){
+                    editName.setError("Obrigatório");
+                }else{
                     if(code.isEmpty()){
                         database.addClient(new Client(name,phone,email));
                         Toast.makeText(MainActivity.this,name+" Salvo", Toast.LENGTH_LONG).show();
@@ -94,8 +94,29 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         database.updateClient(new Client(Integer.parseInt(code),name,phone,email));
                         Toast.makeText(MainActivity.this,name +" Editado", Toast.LENGTH_LONG).show();
+                        listClients();
+                        clearFields();
                     }
-//                }
+                }
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String code = editCode.getText().toString();
+                String name = editName.getText().toString();
+                String phone = editPhone.getText().toString();
+                String email = editEmail.getText().toString();
+
+                if(code.isEmpty()){
+                    listClients();
+                    clearFields();
+                }else{
+                    database.deleteClient(new Client(Integer.parseInt(code),name,phone,email));
+                    Toast.makeText(MainActivity.this,name +" Apagado", Toast.LENGTH_LONG).show();
+                    listClients();
+                    clearFields();
+                }
             }
         });
 //        database.addClient(new Client("Joao","999999999","mail@mail.com"));
