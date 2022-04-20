@@ -47,22 +47,28 @@
         />
 
     <EditText
-        android:id="@+id/editPhone"
+        android:id="@+id/editMarca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="phone"
-        android:minHeight="48dp"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        android:hint="Marca"
+        android:inputType="textPersonName"
+        android:minHeight="48dp" />
 
     <EditText
-        android:id="@+id/editEmail"
+        android:id="@+id/editPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp" />
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editQtd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Quantidade"
+        android:inputType="number" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,4 +102,11 @@
         android:id="@+id/listViewClient"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <EditText
+        android:id="@+id/editTextNumber2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
 </LinearLayout>

@@ -35,13 +35,13 @@ public class DataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String QUERY_TABLE = "CREATE TABLE " + TABLE_CLIENT + " ( "
-                + COLUMN_ID + " INTEGER PRIMARY KEY, "
-                + COLUMN_NAME +  " TEXT,"
-                + COLUMN_PHONE + " TEXT, "
-                + COLUMN_EMAIL + " TEXT )";
-        sqLiteDatabase.execSQL(QUERY_TABLE);
-        QUERY_TABLE = "CREATE TABLE " + TABLE_PRODUCT + " ( "
+//        String QUERY_TABLE = "CREATE TABLE " + TABLE_CLIENT + " ( "
+//                + COLUMN_ID + " INTEGER PRIMARY KEY, "
+//                + COLUMN_NAME +  " TEXT,"
+//                + COLUMN_PHONE + " TEXT, "
+//                + COLUMN_EMAIL + " TEXT )";
+//        sqLiteDatabase.execSQL(QUERY_TABLE);
+        String QUERY_TABLE = "CREATE TABLE " + TABLE_PRODUCT + " (  "
                 + COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_PRODUCT_NAME +  " TEXT,"
                 + COLUMN_PRODUCT_PRICE + " REAL, "
@@ -134,7 +134,7 @@ public class DataBase extends SQLiteOpenHelper {
         values.put(COLUMN_PRODUCT_QTD,p.getQdt());
         values.put(COLUMN_PRODUCT_MARCA,p.getQdt());
 
-        db.update(TABLE_CLIENT,values,COLUMN_ID + "  = ? ",
+        db.update(TABLE_PRODUCT,values,COLUMN_PRODUCT_ID + "  = ? ",
                 new String[] {String.valueOf(p.getCode())});
     }
     public List<Client> listaAllClients(){

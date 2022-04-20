@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    EditText editCode,editName,editPhone,editEmail;
+    EditText editCode,editName,editMarca,editPrice,editQtd;
     Button btnClear,btnSave,btnDelete;
     ListView listViewClient;
 
@@ -47,30 +47,32 @@ public class MainActivity extends AppCompatActivity {
         listViewClient = findViewById(R.id.listViewClient);
         editCode = findViewById(R.id.editCode);
         editName = findViewById(R.id.editName);
-        editPhone = findViewById(R.id.editPhone);
-        editEmail = findViewById(R.id.editEmail);
+        editMarca = findViewById(R.id.editMarca);
+        editPrice = findViewById(R.id.editPrice);
+        editQtd = findViewById(R.id.editQtd);
 
         btnClear = findViewById(R.id.btnClear);
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
 
         imm = (InputMethodManager) this.getSystemService(Service.INPUT_METHOD_SERVICE);
-        listClients();
+        listProducts();
 
         listViewClient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String content = (String) listViewClient.getItemAtPosition(i);
 
-                Toast.makeText(MainActivity.this, "Cliente Selecionado: " + content,Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Produto Selecionado: " + content,Toast.LENGTH_LONG).show();
 
                 String code = content.substring(0,content.indexOf("-"));
-                Client cLient = database.selectClient(Integer.parseInt(code));
+                Product p = database.selectProduct(Integer.parseInt(code));
 
-                editCode.setText( ""+cLient.getCode());
-                editName.setText(cLient.getName());
-                editPhone.setText(cLient.getPhone());
-                editEmail.setText(cLient.getEmail());
+                editCode.setText( ""+p.getCode());
+                editName.setText(p.getName());
+                editMarca.setText(p.getMarca());
+                editPrice.setText(""+p.getPrice());
+                editQtd.setText(""+p.getQdt());
             }
         });
         btnClear.setOnClickListener(new View.OnClickListener() {
@@ -85,22 +87,28 @@ public class MainActivity extends AppCompatActivity {
 
                 String code = editCode.getText().toString();
                 String name = editName.getText().toString();
-                String phone = editPhone.getText().toString();
-                String email = editEmail.getText().toString();
+                String price = editPrice.getText().toString();
+                String qtd = editQtd.getText().toString();
+                String marca = editMarca.getText().toString();
 
                 if(name.isEmpty()){
                     editName.setError("Obrigatório");
-                }else{
+                }else if(price.isEmpty()){
+                    editPrice.setError("Informe um valor ou 0");
+                }else if(qtd.isEmpty()){
+                    editQtd.setError("Informe um valor ou 0");
+                }
+                else{
                     if(code.isEmpty()){
-                        database.addClient(new Client(name,phone,email));
+                        database.addProduct(new Product(name,Double.parseDouble(price),Integer.parseInt(qtd),marca));
                         Toast.makeText(MainActivity.this,name+" Salvo", Toast.LENGTH_LONG).show();
-                        listClients();
+                        listProducts();
                         clearFields();
                         hideKeyboard();
                     }else{
-                        database.updateClient(new Client(Integer.parseInt(code),name,phone,email));
+                        database.updateProduct(new Product(Integer.parseInt(code),name,Double.parseDouble(price),Integer.parseInt(qtd),marca));
                         Toast.makeText(MainActivity.this,name +" Editado", Toast.LENGTH_LONG).show();
-                        listClients();
+                        listProducts();
                         clearFields();
                         hideKeyboard();
                     }
@@ -112,16 +120,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String code = editCode.getText().toString();
                 String name = editName.getText().toString();
-                String phone = editPhone.getText().toString();
-                String email = editEmail.getText().toString();
-
+                String price = editPrice.getText().toString();
+                String qtd = editQtd.getText().toString();
+                String marca = editMarca.getText().toString();
                 if(code.isEmpty()){
-                    listClients();
+                    listProducts();
                     clearFields();
                 }else{
-                    database.deleteClient(new Client(Integer.parseInt(code),name,phone,email));
+                    database.deleteProduct(new Product(Integer.parseInt(code),name,Double.parseDouble(price),Integer.parseInt(qtd),marca));
                     Toast.makeText(MainActivity.this,name +" Apagado", Toast.LENGTH_LONG).show();
-                    listClients();
+                    listProducts();
                     clearFields();
                 }
                 hideKeyboard();
@@ -154,13 +162,14 @@ public class MainActivity extends AppCompatActivity {
     void clearFields(){
         editCode.setText("");
         editName.setText("");
-        editPhone.setText("");
-        editEmail.setText("");
+        editMarca.setText("");
+        editPrice.setText("");
+        editQtd.setText("");
 
         editName.requestFocus();
     }
-    public void listClients() {
-        List<Client> clients = database.listaAllClients();
+    public void listProducts() {
+        List<Product> products = database.listProducts();
 
         list = new ArrayList<String>();
 
@@ -168,9 +177,9 @@ public class MainActivity extends AppCompatActivity {
 
         listViewClient.setAdapter(adapter);
 
-        for (Client c : clients) {
+        for (Product p : products) {
 //            Log.d("Client Selecionado: ", c.getCode() + " " + c.getName() + " " + c.getEmail());
-            list.add(c.getCode() + "- " + c.getName() + " " + c.getPhone() + " " + c.getEmail()  );
+            list.add(p.getCode() + "- " + p.getName() + " " + p.getPrice() + " " + p.getQdt()+ " " + p.getMarca());
             adapter.notifyDataSetChanged();
         }
     }

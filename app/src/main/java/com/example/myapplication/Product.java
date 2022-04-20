@@ -3,7 +3,7 @@ package com.example.myapplication;
 public class Product {
     int code;
     String name;
-    Double Price;
+    double Price;
     int qdt;
     String marca;
 
