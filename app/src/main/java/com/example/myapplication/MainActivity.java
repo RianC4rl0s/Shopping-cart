@@ -2,9 +2,12 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Service;
 import android.os.Bundle;
 //import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ArrayList<String> list;
 
+    InputMethodManager imm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
 
-
+        imm = (InputMethodManager) this.getSystemService(Service.INPUT_METHOD_SERVICE);
         listClients();
 
         listViewClient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,11 +96,13 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this,name+" Salvo", Toast.LENGTH_LONG).show();
                         listClients();
                         clearFields();
+                        hideKeyboard();
                     }else{
                         database.updateClient(new Client(Integer.parseInt(code),name,phone,email));
                         Toast.makeText(MainActivity.this,name +" Editado", Toast.LENGTH_LONG).show();
                         listClients();
                         clearFields();
+                        hideKeyboard();
                     }
                 }
             }
@@ -117,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     listClients();
                     clearFields();
                 }
+                hideKeyboard();
             }
         });
 //        database.addClient(new Client("Joao","999999999","mail@mail.com"));
@@ -139,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
 //        clientResponse =  database.selectClient(3);
 //        Log.d("Client Selecionado: ",clientResponse.getName() + " " + clientResponse.getEmail());
 
+    }
+    void hideKeyboard(){
+        imm.hideSoftInputFromWindow(editName.getWindowToken(),0);
     }
     void clearFields(){
         editCode.setText("");

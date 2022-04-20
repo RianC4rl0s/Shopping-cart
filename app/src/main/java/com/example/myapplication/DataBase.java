@@ -93,6 +93,7 @@ public class DataBase extends SQLiteOpenHelper {
                 clients.add(client);
             }while (cursor.moveToNext());
         }
+        cursor.close();
         return clients;
     }
 }

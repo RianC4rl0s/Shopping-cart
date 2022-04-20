@@ -18,14 +18,22 @@
         app:layout_constraintTop_toTopOf="parent" />
         <-->
 
+<!--    <EditText-->
+<!--        android:id="@+id/editCode"-->
+<!--        android:layout_width="192dp"-->
+<!--        android:layout_height="wrap_content"-->
+
+<!--        android:editable="true"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />-->
     <EditText
         android:id="@+id/editCode"
         android:layout_width="192dp"
         android:layout_height="wrap_content"
-
-        android:editable="false"
         android:ems="10"
-        android:inputType="number"
+        android:inputType="none"
+        android:enabled="false"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <EditText
